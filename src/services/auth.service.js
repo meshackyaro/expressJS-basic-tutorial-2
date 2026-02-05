@@ -1,5 +1,6 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import { generateToken } from "../utils/jwt.js";
 
 export const loginService = async ({email, password}) => {
     
@@ -11,9 +12,15 @@ export const loginService = async ({email, password}) => {
 
     if (!isMatch) throw new Error("incorrect email or password");
 
-    return {
+    const token = generateToken({
         id: user.id,
         email: user.email
+    })
+
+    return {
+        id: user.id,
+        email: user.email,
+        token
     };
 
 };
