@@ -12,15 +12,11 @@ export const loginService = async ({email, password}) => {
 
     if (!isMatch) throw new Error("incorrect email or password");
 
-    const token = generateToken({
-        id: user.id,
-        email: user.email
-    })
+    const token = generateToken(user.id);
 
     return {
         id: user.id,
-        email: user.email,
-        token
+        token,
     };
 
 };
