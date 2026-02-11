@@ -1,10 +1,22 @@
-import { asyncHandler } from "../utils/asyncHandler.js";
-import { createUserService } from "../services/user.service.js";
+import { getUserProfile, updateUserProfile } from "../services/user.service.js";
 
-export const createUser = async (req, res) => {
+export const profile = async (req, res) => {
 
-    const user = await createUserService(req.body);
+    const user = await getUserProfile(req.user.sub);
+    
+    res.status(200).json({
+        status: "SUCCESS",
+        data: user
+    });
+};
 
-    res.status(201).json(user);
+export const updateProfile = async (req, res) => {
 
+    const updatedUser = await updateUserProfile(req.user.sub, req.body);
+    
+    res.status(200).json({
+        status: "SUCCESS",
+        data: updatedUser
+    });
+    
 };

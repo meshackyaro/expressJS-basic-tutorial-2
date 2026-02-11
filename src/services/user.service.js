@@ -1,22 +1,34 @@
-import bcrypt from "bcrypt";
+import { object } from "zod";
 import { User } from "../models/user.model.js";
 
-export const createUserService = async ({username, email, password}) => {
-    const existingUser = await User.findOne({email, username});
+export const getUserProfile = async (userId) => {
 
-    if (existingUser) throw new Error("User already exists");
+    const user = await User.findById(userId).select("-password");
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    if (!user) throw new Error("User not found");
 
-    const user = await User.create({
-        username,
-        email,
-        password: hashedPassword
+    return user;
+};
+
+export const updateUserProfile = async (userId, updateData) => {
+
+    const allowedUpdates = ["username"];
+
+    const updates = {};
+
+    object.keys(updateData).forEach((key) => {
+        if (allowedUpdates.includes(key)) {
+            updates[key] = updateData[key];
+        }
     });
 
-    return {
-        id: user.id,
-        username: user.username,
-        email: user.email
-    }
+    const updatedUser = await User.findByIdAndUpdate(
+        userId, updates, {
+            new: true, runValidators: true
+        }
+    ).select("-password");
+
+    if (!updatedUser) throw new Error("User not found");
+
+    return updatedUser;
 };
