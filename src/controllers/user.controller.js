@@ -20,3 +20,13 @@ export const updateProfile = async (req, res) => {
     });
     
 };
+
+export const changePassword = async (req, res) => {
+
+    const updatedUser = await changePasswordService(req.user.sub, req.body);
+
+    res.status(200).json({
+        status: "SUCCESS",
+        data: updatedUser
+    });
+};
