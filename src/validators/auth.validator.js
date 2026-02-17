@@ -1,12 +1,32 @@
 import { z } from "zod";
 
-export const createdUserSchema = z.object({
-    username: z.string().min(3, "Username must be at least 3 characters long"),
-    email: z.email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters long")
-});
+export const createdUserSchema = z
+    .object({
+        username: z
+        .string()
+        .min(3, {message: "Username must be at least 3 characters long"})
+        .max(18, {message: "Username must be at most 18 characters long"})
+        .trim(),
 
-export const loginSchema = z.object({
-    email: z.email("Invalid email address"),
-    password: z.string().min(6, "Password must be at least 6 characters long")
-});
+        email: z
+        .email({message: "Invalid email address"})
+        .trim(),
+
+        password: z.string()
+        .min(6, {message: "Password must be at least 6 characters long"})
+        .max(18, {message: "Password must be at most 18 characters long"})
+        .trim(),
+    });
+
+export const loginSchema = z
+    .object({
+        email: z
+        .email({message: "Invalid email address"})
+        .trim(),
+
+        password: z
+        .string()
+        .min(6, {message: "Password must be at least 6 characters long"})
+        .max(18, {message: "Password must be at most 18 characters long"})
+        .trim()
+    });

@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt.js";
 
 export const createUserService = async ({username, email, password}) => {
+
     const existingUser = await User.findOne({email, username});
 
     if (existingUser) throw new Error("User already exists");
@@ -40,3 +41,10 @@ export const loginService = async ({email, password}) => {
     };
 
 };
+
+export const logoutService = async ( {userId} ) => {
+
+    
+
+
+}

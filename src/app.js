@@ -1,10 +1,7 @@
 import express from "express";
-import authRoutes from "./routes/auth.routes.js";
 import { errorHandler } from "./middlewares/error.middleware.js";
 import { requestLogger } from "./middlewares/logger.middleware.js";
 import routes from "./routes/index.js";
-import userRoutes from "./routes/user.route.js";
-
 
 export const app = express();
 

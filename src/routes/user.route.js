@@ -14,8 +14,8 @@ router.put(
     protect, updateProfile
 );
 
-router.put(
-    "/changePassword",
+router.patch(
+    "/change-password",
     protect, changePassword
 );
 
